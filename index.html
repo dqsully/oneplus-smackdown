@@ -1,0 +1,547 @@
+<html>
+  <head>
+    <title>Oneplus Smackdown</title>
+    <script src="matter.js"></script>
+    <script src="phonecomp.js"></script>
+    <script src="phones.json" id="phonelist" type="application/json"></script>
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+    <style>
+      /*
+        Color Palette:
+          Red: #EB0029         (Logo)
+          White: white         (Text)
+          Light Grey: #F3F3F3  (Checkered Background)
+          Text Grey: #828282   (For Nav Text)
+          Grey: #787878        (Button Icons)
+          Dark Grey: #707276   (Buttons on Light Grey)
+
+          Nav: #E8E8E8 (white w/ 0.9 opacity)
+          background: transparent url("../images/store/theme_bg_1.png") repeat scroll 0% 0%;
+      */
+      body, html {
+          margin: 0;
+          padding: 0;
+          font-family: Lato, "Lato Latin", Helvetica, Arial, sans-serif;
+          letter-spacing: 0.02em;
+          font-weight: 400;
+          color: #666;
+          background: transparent -webkit-linear-gradient(left, #222 0%, #444 100%) repeat scroll 0% 0%;
+          background: transparent -o-linear-gradient(left, #222 0%, #444 100%) repeat scroll 0% 0%;
+          background: transparent linear-gradient(to right, #222 0%, #444 100%) repeat scroll 0% 0%;
+          overflow: hidden;
+          height: 100%;
+        }
+      #cont {
+        background: transparent url("https://content.oneplus.net/skin/frontend/oneplus2015/default/images/store/theme_bg_1.png") repeat scroll 0% 0%;
+        height: 100%;
+      }
+
+      #title {
+        height: 58px;
+        line-height: 58px;
+        font-size: 28px;
+        text-align: center;
+        background-color: white;
+        color: #EB0029;
+        opacity: 0.9;
+      }
+        #title span:not(.logo) {
+          margin-left: 6.5px;
+        }
+      .logo {
+        width: 38px;
+        height: 38px;
+      	background: transparent url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMjQgMjQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNFQjAwMjkiIGQ9Ik03LjMsMTguOHYtMi4xaDIuMXYtNi4ySDcuM1Y4LjNoNC4ydjguM2gyLjF2Mi4xSDcuM3ogTTIwLjksMjRWMTAuNGgtMi4xdjExLjVIMi4xVjUuMmgxMS41VjMuMUgwVjI0SDIwLjl6DQoJIE0yMC45LDguM1Y1LjJIMjRWMy4xaC0zLjFWMGgtMi4xdjMuMWgtMy4xdjIuMWgzLjF2My4xSDIwLjl6Ii8+DQo8L3N2Zz4NCg==") no-repeat scroll center center;
+      	display: inline-block;
+      	vertical-align: middle;
+        position: relative;
+      	top: -3px;
+      }
+
+      #arena {
+        display: flex;
+        height: 450px;
+      }
+        #leftside, #rightside {
+          flex: 0.6 0 130px;
+          padding: 8px;
+        }
+        #leftcont, #rightcont {
+          background-color: rgba(255, 255, 255, 0.8);
+          width: 100%;
+          height: 100%;
+        }
+          #leftcont > .title, #rightcont > .title {
+            font-size: 24px;
+            text-align: center;
+            height: 32px;
+            line-height: 40px;
+            color: black;
+            font-weight: 300;
+          }
+          #rightcont .searchcont {
+            position: relative;
+            height: 33px;
+          }
+            #rightcont #search {
+              top: 6px;
+              left: 6px;
+              width: calc(100% - 39px);
+              padding: 5px;
+              display: block;
+              border: none;
+              background-color: white;
+              position: absolute;
+              font-family: inherit;
+            }
+            #rightcont #searchbutton {
+              width: 27px;
+              height: 27px;
+              right: 6px;
+              top: 6px;
+              display: block;
+              background-color: white;
+              position: absolute;
+              cursor: pointer;
+            }
+            #rightcont #searchresults {
+              position: absolute;
+              right: 6px;
+              left: 6px;
+              top: 34px;
+              max-height: 0;
+              background-color: white;
+              transition: max-height 0.2s, border-width 0.2s;
+              border: 0px #828282;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              overflow-y: auto;
+            }
+              #rightcont #searchresults.show {
+                max-height: 500px;
+                border-width: 1px;
+              }
+              #rightcont .result {
+                width: 100%;
+                height: 63px;
+                position: relative;
+                background-color: white;
+                transition: color .4s, background-color .4s;
+                cursor: pointer;
+              }
+                #rightcont .result:nth-child(odd) {
+                  background-color: #F3F3F3;
+                }
+                #rightcont .result:hover {
+                  transition: color .2s, background-color .2s;
+                  background-color: #EB0029;
+                  color: white;
+                }
+                #rightcont .result img {
+                  position: absolute;
+                  left: 5;
+                  top: 5;
+                  height: 53px;
+                  width: 40px;
+                }
+                #rightcont .result .title {
+                  width: calc(100% - 55px);
+                  top: 5;
+                  right: 5;
+                  height: 53px;
+                  font-size: 16px;
+                  line-height: 20px;
+                  position: absolute;
+                }
+          #leftcont .onplscont {
+            position: relative;
+            height: 33px;
+          }
+            #leftcont #onpls {
+              top: 6px;
+              left: 6px;
+              width: calc(100% - 39px);
+              padding: 5px;
+              display: block;
+              border: none;
+              background-color: white;
+              position: absolute;
+              text-overflow: ellipsis;
+              line-height: 17px;
+              font-size: 13.3333px;
+              color: black;
+              height: 17px;
+            }
+            #leftcont #onplsbutton {
+              width: 27px;
+              height: 27px;
+              right: 6px;
+              top: 6px;
+              display: block;
+              background-color: white;
+              position: absolute;
+            }
+              #leftcont #onplsbutton path {
+                transform: translate(14.5px, 14.5px);
+                transition: transform .2s;
+              }
+            #leftcont #onplsresults {
+              position: absolute;
+              right: 6px;
+              left: 6px;
+              top: 34px;
+              max-height: 0;
+              background-color: white;
+              transition: max-height 0.2s, border-width 0.2s;
+              border: 0px #828282;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              overflow-y: auto;
+            }
+              #leftcont .onplscont:hover #onplsresults {
+                max-height: 500px;
+                border-width: 1px;
+              }
+              #leftcont .onplscont:hover #onplsbutton path {
+                transform: translate(14.5px, 14.5px) rotate(90deg);
+              }
+              #leftcont .result {
+                width: 100%;
+                height: 63px;
+                position: relative;
+                background-color: white;
+                transition: color .4s, background-color .4s;
+                cursor: pointer;
+              }
+                #leftcont .result:hover {
+                  transition: color .2s, background-color .2s;
+                  background-color: #EB0029;
+                  color: white;
+                }
+                #leftcont .result img {
+                  position: absolute;
+                  left: 5;
+                  top: 5;
+                  height: 53px;
+                  width: 40px;
+                }
+                #leftcont .result .title {
+                  width: calc(100% - 55px);
+                  top: 5;
+                  right: 5;
+                  height: 53px;
+                  font-size: 16px;
+                  line-height: 20px;
+                  position: absolute;
+                }
+          .basespec {
+            padding: 6px;
+            display: block;
+          }
+            .basespec td {
+              vertical-align: top;
+            }
+            .basespec td:first-child {
+              color: black;
+              text-align: right;
+            }
+        #board {
+          flex: 6;
+          position: relative;
+        }
+          #board > * {
+            position: absolute;
+          }
+          #mid {
+            z-index: 1;
+            transform: translate(-50%);
+            left: 50%;
+            stroke: #828282;
+            stroke-width: 2px;
+            width: 11px;
+            height: 450px;
+          }
+          #board .phone {
+            transition: left 0.1s linear, bottom 0.1s linear;
+            position: absolute;
+            width: 80px;
+            height: 106px;
+          }
+            #board #lphone {
+              left: 15px;
+              bottom: 0px;
+            }
+            #board #rphone {
+              left: calc(100% - 95px);
+              bottom: 0;
+            }
+          #board #start {
+            width: 300px;
+            height: 300px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%)scale(0.8);
+            opacity: 0;
+            transition: transform 0.4s, opacity 0.4s;
+            background-color: white;
+            text-align: center;
+            vertical-align: middle;
+            pointer-events: none;
+          }
+            #board #start #startbutton {
+              border: 1px solid black;
+              color: #828282;
+              background-color: white;
+              cursor: pointer;
+              transition: color 0.4s, border-color 0.4s, background-color 0.4s, padding 0.4s, font-size 0.4s;
+              margin-top: 18px;
+              display: inline-block;
+              padding: 5px;
+              font-size: initial;
+              font-weight: initial;
+              pointer-events: none;
+            }
+              #board #start #startbutton:hover {
+                border-color: #EB0029;
+                background-color: #F3F3F3;
+                color: black;
+                transition: color 0.2s, border-color 0.2s, background-color 0.2s, padding 0.2s, font-size 0.2s;
+                padding: 8px;
+                font-size: 18px;
+              }
+            #board #start.show {
+              opacity: 1;
+              transform: translate(-50%, -50%);
+              z-index: 1001;
+              pointer-events: all;
+            }
+              #board #start.show #startbutton {
+                pointer-events: all;
+              }
+            #board #start div {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              font-size: 24px;
+              font-weight: 300;
+            }
+
+      #specs {
+        background-color: rgba(255, 255, 255, 0.9);
+        height: calc(100% - 508px);
+        overflow-y: auto;
+      }
+        #specs .title {
+          font-size: 32px;
+          text-align: center;
+          font-weight: 300;
+          line-height: 40px;
+          height: 40px;
+          color: black;
+        }
+        #specs table {
+          table-layout: fixed;
+          width: 100%;
+          margin-top: -10px;
+        }
+          #specs tr:first-child td {
+            font-size: 24px;
+            text-align: center;
+          }
+          .cont {
+            width: 100%;
+          }
+            .cont > div {
+              transition: height .2s;
+              background-color: white;
+              height: 0;
+              overflow: hidden;
+              position: relative;
+              width: 100%;
+            }
+              .cont > div span {
+                font-size: 14px;
+                position: relative;
+                height: 100%;
+                display: inline-block;
+                box-sizing: border-box;
+              }
+              .cont > div.show {
+                height: 100px;
+              }
+                .cont > div span:first-child {
+                  font-size: 20px;
+                  text-align: right;
+                  width: 200px;
+                  line-height: 100px;
+                }
+                .cont > div span:not(:first-child) {
+                  color: black;
+                  width: calc(100% - 200px);
+                  overflow-y: auto;
+                  padding-left: 30px;
+                }
+              .cont > div:nth-child(odd) {
+                background-color: #F3F3F3;
+              }
+              .cont > div.good {
+                background-color: #a7ff9f;
+              }
+              .cont > div.good:nth-child(odd) {
+                background-color: #a0f199;
+              }
+              .cont > div.bad {
+                background-color: #ffb69f;
+              }
+              .cont > div.bad:nth-child(odd) {
+                background-color: #f19999;
+              }
+
+      #fixstart {
+        height: 40px;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        transition: opacity 0.4s, background-color 0.4s;
+      }
+        #fixstart.show {
+          opacity: 0.5;
+        }
+        #fixstart.show:hover {
+          opacity: 1;
+          background-color: rgba(0, 0, 0, 0.2);
+          transition: opacity 0.2s, background-color 0.2s;
+        }
+        #fixstart #fixstartbutton {
+          border: 1px solid black;
+          color: #828282;
+          background-color: white;
+          cursor: pointer;
+          transition: color 0.4s, border-color 0.4s, background-color 0.4s;
+          display: inline-block;
+          padding: 5px;
+          pointer-events: all;
+          margin-top: 4px;
+        }
+          #fixstart #fixstartbutton:hover {
+            border-color: #EB0029;
+            background-color: #F3F3F3;
+            color: black;
+            transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+          }
+
+      #dark {
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.4s;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+      }
+        #dark.show {
+          pointer-events: all;
+          opacity: 1;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="cont">
+      <div id="title">
+        <span class="logo"></span>
+        <span>OnePlus</span> <span>Smackdown</span>
+      </div>
+      <div id="arena">
+        <div id="leftside">
+          <div id="leftcont">
+            <div class="title">Choose a Phone</div>
+            <div class="onplscont">
+              <div id="onpls">OnePlus Phones</div>
+              <svg id="onplsbutton" viewbox="0 0 29 29">
+                <path d="m -5,-5.5 10,5.5 -10,5.5 z" style="fill:#787878;" />
+              </svg>
+              <div id="onplsresults"></div>
+            </div>
+            <table class="basespec">
+              <tr>
+                <td>Announced</td>
+                <td id="lann"></td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td id="lstat"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="board">
+          <svg id="mid" viewBox="-0.5 0 1 450"><path d="M0,0 L0,450" stroke-dasharray="10, 10"></path></svg>
+          <div id="start">
+            <div>
+              Start the battle?<br>
+              <span id="startbutton">Start</span>
+            </div>
+          </div>
+          <div id="lphone" class="phone"></div>
+          <div id="rphone" class="phone"></div>
+        </div>
+        <div id="rightside">
+          <div id="rightcont">
+            <div class="title">Choose a Phone</div>
+            <div class="searchcont">
+              <input id="search" title="Shift+Enter to search all available phones.">
+              <svg id="searchbutton" viewBox="0 0 29 29" title="Shift-click to search all available phones.">
+                  <g transform="translate(0.33965587,0.77462633)">
+                    <path style="fill:none;stroke:#787878;stroke-width:3.5;" d="m 16,16 10,9"/>
+                    <circle style="fill:none;stroke:#787878;stroke-width:1.7;" cx="10" cy="10" r="8" />
+                  </g>
+              </svg>
+              <div id="searchresults"></div>
+            </div>
+            <table class="basespec">
+              <tr>
+                <td>Announced</td>
+                <td id="rann"></td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td id="rstat"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div id="specs">
+        <div class="title">Specs</div>
+        <table>
+          <tr>
+            <td id="lname"></td>
+            <td id="rname"></td>
+          </tr>
+          <tr>
+            <td>
+              <table id="lcont" class="cont"></table>
+            </td>
+            <td>
+              <table id="rcont" class="cont"></table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="fixstart">
+        <span id="fixstartbutton">Start</span>
+      </div>
+      <div id="dark"></div>
+    </div>
+    <script>ready();</script>
+  </body>
+</html>
